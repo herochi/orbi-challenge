@@ -39,9 +39,15 @@ Los endpoints de **Service A** están documentados utilizando **Swagger** y se e
 - **PATCH** `/orbi-api/v1/a/users/{id}`:  
   Actualiza la información de un usuario. Al realizar la actualización, **Service A** envía una notificación a **Service B** a través de RabbitMQ.
 
+**Puerto de Service A:**  
+Service A corre en el puerto **8080**.
+
 ## Contratos de Comunicación gRPC de Service B
 
 Los contratos de comunicación gRPC de **Service B** se encuentran en el archivo `user.proto`, ubicado en la carpeta `user` dentro del proyecto de **Service B**. Puedes revisar este archivo para ver las definiciones de las peticiones y respuestas gRPC.
+
+**Puerto de Service B:**  
+Service B corre en el puerto **50051**.
 
 ## Flujo de Trabajo entre los Servicios
 
@@ -69,6 +75,11 @@ Service A incluye pruebas unitarias para el servicio de gestión de usuarios. Es
 ```bash
 make test-a
 ```
+
+## Nota sobre rabbitMQ
+
+Sí se desea observar las colas en la interfaz gráfica de rabbit se pueden dirigir al path http://localhost:15672/ el usuario y contreña es: `guest`
+
 
 
 ## Tecnologías Utilizadas
