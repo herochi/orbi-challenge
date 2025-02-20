@@ -38,3 +38,10 @@ docker-compose-exec-a:
 
 docker-compose-exec-b:
 	docker-compose exec service-b bash
+
+# Ejecutar pruebas unitarias de Service A
+test-a:
+	cd service-a/application/user && go test ./ -v
+
+
+
