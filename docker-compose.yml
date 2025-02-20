@@ -1,0 +1,66 @@
+version: '3.8'
+
+services:
+  mongo:
+    image: mongo:6.0
+    container_name: mongo_db
+    restart: always
+    ports:
+      - "27017:27017"
+    networks:
+      - backend
+    volumes:
+      - mongo_data:/data/db
+
+  rabbitmq:
+    image: rabbitmq:management
+    container_name: rabbitmq
+    restart: always
+    ports:
+      - "5672:5672"  # Puerto de RabbitMQ
+      - "15672:15672"  # Interfaz web de RabbitMQ
+    networks:
+      - backend
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+
+  service-a:
+    build:
+      context: ./service-a
+      dockerfile: Dockerfile
+    container_name: service-a
+    restart: always
+    depends_on:
+      - mongo
+      - rabbitmq
+    ports:
+      - "8080:8080"  # Puerto de la API REST
+    networks:
+      - backend
+    environment:
+      MONGO_URI: "mongodb://mongo:27017/serviceA"
+      RABBITMQ_URI: "amqp://guest:guest@rabbitmq:5672/"
+
+  service-b:
+    build:
+      context: ./service-b
+      dockerfile: Dockerfile
+    container_name: service-b
+    restart: always
+    depends_on:
+      - rabbitmq
+    ports:
+      - "50051:50051"  # Puerto de gRPC
+    networks:
+      - backend
+    environment:
+      RABBITMQ_URI: "amqp://guest:guest@rabbitmq:5672/"
+      SERVICE_A_URL: "http://service-a:8080"
+
+networks:
+  backend:
+    driver: bridge
+
+volumes:
+  mongo_data:

@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+package user;
+option go_package = "proto";
+
+service UserService {
+  rpc NotifyUser (Request) returns (NotifyResponse);
+}
+
+message Request {
+  string user_id = 1;
+}
+
+message NotifyResponse {
+  string message = 1;
+}

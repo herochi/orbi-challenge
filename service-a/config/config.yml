@@ -1,0 +1,15 @@
+JWT_SECRET: "ASi8zALG3Kl6suig6l3Zx2iRrewhPz9RQs9PLx1l"
+REFRESH_JWT_SECRET: "VQSMYy0Gpg7hXWyR6EX9aVrXwqEDl0QRoou7Mm4w"
+
+ENV: "DEV"
+
+PORT: "3500"
+PORT_DEV: "8080"
+
+MONGO:
+  URI: "mongodb://mongo:27017"
+  URI_DEV: "mongodb://mongo:27017"
+  DATABASE: "orbi-service-a"
+  DATABASE_DEV: "orbi-service-a"
+
+FILESROUTE: "./files"

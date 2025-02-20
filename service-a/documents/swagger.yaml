@@ -1,0 +1,124 @@
+swagger: "2.0"
+info:
+  description: API para gestionar usuarios.
+  version: 1.0.0
+  title: API de Usuarios
+host: localhost:8080  # Define el host y puerto
+basePath: /orbi-api/v1/a  # Define la base del path de la API
+schemes:
+  - http
+paths:
+  /users/:
+    post:
+      summary: Crear un nuevo usuario
+      consumes:
+        - application/json
+      parameters:
+        - in: body
+          name: user
+          description: El usuario que se va a crear.
+          required: true
+          schema:
+            type: object
+            properties:
+              name:
+                type: string
+                example: "hero"
+              email:
+                type: string
+                example: "ricardo.isc.chi@gmail.com"
+              age:
+                type: integer
+                example: 27
+      responses:
+        201:
+          description: Usuario creado con éxito.
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                example: "User created"
+        400:
+          description: Error en la solicitud.
+        500:
+          description: Error interno del servidor.
+
+  /users/{id}:
+    get:
+      summary: Obtener los detalles de un usuario
+      parameters:
+        - in: path
+          name: id
+          required: true
+          type: string
+          description: ID del usuario.
+      responses:
+        200:
+          description: Información del usuario.
+          schema:
+            type: object
+            properties:
+              id:
+                type: string
+                example: "67b529cbf70f603d3d12db7d"
+              name:
+                type: string
+                example: "hero"
+              email:
+                type: string
+                example: "ricardo.isc.chi@gmail.com"
+              age:
+                type: integer
+                example: 27
+              createdAt:
+                type: string
+                format: date-time
+                example: "2025-02-19T12:00:00Z"
+              updatedAt:
+                type: string
+                format: date-time
+                example: "2025-02-19T12:00:00Z"
+        404:
+          description: Usuario no encontrado.
+        500:
+          description: Error interno del servidor.
+
+    patch:
+      summary: Actualizar los detalles de un usuario
+      consumes:
+        - application/json
+      parameters:
+        - in: path
+          name: id
+          required: true
+          type: string
+          description: ID del usuario a modificar.
+        - in: body
+          name: user
+          description: Datos del usuario a modificar.
+          required: true
+          schema:
+            type: object
+            properties:
+              name:
+                type: string
+                example: "hero modified"
+              email:
+                type: string
+                example: "rchi@gmail.com"
+      responses:
+        200:
+          description: Usuario actualizado con éxito.
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                example: "User updated"
+        400:
+          description: Error en la solicitud.
+        404:
+          description: Usuario no encontrado.
+        500:
+          description: Error interno del servidor.
